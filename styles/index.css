@@ -5,6 +5,11 @@
   font-size: 18px;
 }
 
+html,
+body {
+  touch-action: pan-x pan-y;
+}
+
 #map {
   height: 100vh;
   width: 100%;
