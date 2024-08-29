@@ -14,6 +14,39 @@ body {
   height: 100vh;
   width: 100%;
 }
+
+.ol-zoom {
+  position: absolute;
+  top: 87vh !important;
+  left: 15px !important;
+}
+
+.ol-control {
+  background-color: transparent !important;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 10px;
+  border-radius: 10px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.ol-zoom-in,
+.ol-zoom-out {
+  color: black !important;
+  background-color: white !important;
+  font-size: 1.5em !important;
+  margin: 0 !important;
+}
+
+.ol-zoom-in {
+  border-top-left-radius: 10px !important;
+  border-top-right-radius: 10px !important;
+  margin-bottom: 1px !important;
+}
+.ol-zoom-out {
+  border-bottom-left-radius: 10px !important;
+  border-bottom-right-radius: 10px !important;
+}
+
 .ol-popup {
   background-color: white;
   border-radius: 5px;
@@ -25,13 +58,23 @@ body {
   white-space: nowrap;
 }
 
-#dropdown-holder {
+#dropdowns {
   position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
   top: 10px;
   right: 10px;
 }
 
-#drop-toggle {
+#dropdown-holder {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: end;
+}
+
+.drop-toggle {
   width: 45px;
   height: 45px;
   display: flex;
@@ -43,7 +86,7 @@ body {
   box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 10px;
 }
 
-#drop-toggle img {
+.drop-toggle img {
   width: 28px;
 }
 
@@ -51,16 +94,16 @@ body {
   display: flex !important;
 }
 
-#dropdown {
+.dropdown {
   display: none;
   flex-direction: column;
-  position: absolute;
+  /* position: absolute; */
   gap: 6px;
-  top: 55px;
-  right: 0;
+  /* top: 55px; */
+  /* right: 0; */
 }
 
-#dropdown button {
+.dropdown button {
   white-space: nowrap;
   padding: 5px 10px;
   font-size: 17px;
