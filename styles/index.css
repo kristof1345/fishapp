@@ -27,11 +27,19 @@
 }
 
 #drop-toggle {
-  width: 30px;
-  height: 30px;
+  width: 45px;
+  height: 45px;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: white;
+  border: none;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 10px;
+}
+
+#drop-toggle img {
+  width: 28px;
 }
 
 .show {
@@ -42,14 +50,19 @@
   display: none;
   flex-direction: column;
   position: absolute;
-  gap: 4px;
-  top: 40px;
+  gap: 6px;
+  top: 55px;
   right: 0;
 }
 
 #dropdown button {
   white-space: nowrap;
-  padding: 2px 5px;
+  padding: 5px 10px;
+  font-size: 17px;
+  background-color: white;
+  border: none;
+  border-radius: 7px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 10px;
 }
 
 ul li {

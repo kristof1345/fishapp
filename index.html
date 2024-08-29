@@ -17,7 +17,9 @@
     <div id="map"></div>
 
     <section id="dropdown-holder">
-      <button id="drop-toggle" onclick="toggleDropdown()">|||</button>
+      <button id="drop-toggle" onclick="toggleDropdown()">
+        <img src="./assets/hamburger.svg" alt="Hamburger menu" />
+      </button>
       <div id="dropdown">
         <button id="add-fish-btn">Add Marker</button>
         <button id="delete-btn">Delete Mode</button>
@@ -35,9 +37,9 @@
         dropdownDOM.classList.toggle("show");
 
         if (dropdownDOM.classList.contains("show")) {
-          dropdownBtn.innerHTML = "X";
+          dropdownBtn.innerHTML = `<img src="./assets/exit.svg" alt="Exit menu">`;
         } else {
-          dropdownBtn.innerHTML = "|||";
+          dropdownBtn.innerHTML = `<img src="./assets/hamburger.svg" alt="Hamburger menu">`;
         }
       }
     </script>
