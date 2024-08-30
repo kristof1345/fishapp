@@ -30,7 +30,7 @@ body {
 
 .ol-zoom {
   position: absolute;
-  top: 87.5vh !important;
+  top: 87.5% !important;
   left: 10px !important;
 }
 
