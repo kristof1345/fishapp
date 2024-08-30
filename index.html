@@ -21,9 +21,27 @@
     </section>
 
     <section id="settings-holder">
-      <button>
+      <button onclick="toggleSettings()">
         <img src="./assets/settings.svg" alt="Settings">
       </button>
+    </section>
+
+    <section id="settings" class="sett">
+      <div>
+        <button onclick="toggleSettings()" class="drop-toggle">
+          <img src="./assets/exit.svg" alt="Exit settings">
+        </button>
+        <ul>
+          <li>shit</li>
+          <li>shit</li>
+          <li>shit</li>
+          <li>shit</li>
+          <li>shit</li>
+          <li>shit</li>
+          <li>shit</li>
+          <li>shit</li>
+        </ul>
+      </div>
     </section>
 
     <section id="dropdowns">
@@ -60,6 +78,12 @@
       // const dropdownBtn2 = document.getElementById("drop-toggle2");
       const dropdownDOM = document.getElementById("dropdown");
       // const dropdownDOM2 = document.getElementById("dropdown2");
+
+      const settings = document.getElementById("settings");
+
+      function toggleSettings() {
+        settings.classList.toggle("opensett");
+      }
 
       function toggleDropdown() {
         dropdownDOM.classList.toggle("show");
