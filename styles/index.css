@@ -79,7 +79,7 @@ body {
   left: 10px;
 }
 
-#settings {
+#elem-settings {
   position: absolute;
   top: 0;
   left: 0;
@@ -87,10 +87,17 @@ body {
   width: 300px;
   height: 100%;
   transition: transform 0.35s;
+  padding: 10px;
+  box-shadow: 4px 0px 17px -4px rgba(0, 0, 0, 0.5);
+}
+
+#elem-settings div button {
+  position: relative;
+  right: -234.5px;
 }
 
 .sett {
-  transform: translate3d(-300px, 0, 0);
+  transform: translate3d(-350px, 0, 0);
 }
 
 .opensett {
@@ -154,13 +161,21 @@ body {
   display: flex !important;
 }
 
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 .dropdown {
   display: none;
   flex-direction: column;
-  /* position: absolute; */
   gap: 6px;
-  /* top: 55px; */
-  /* right: 0; */
+  /* transition: all 1s; */
+  animation: fadeIn 0.3s;
 }
 
 .dropdown button {

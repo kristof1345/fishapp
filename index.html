@@ -17,30 +17,27 @@
     <div id="map"></div>
 
     <section id="searchbar">
-      <input type="text" placeholder="Search a city near your lake...">
+      <input type="text" placeholder="Search a city near your lake..." />
     </section>
 
     <section id="settings-holder">
       <button onclick="toggleSettings()">
-        <img src="./assets/settings.svg" alt="Settings">
+        <img src="./assets/settings.svg" alt="Settings" />
       </button>
     </section>
 
-    <section id="settings" class="sett">
+    <section id="elem-settings" class="sett">
       <div>
         <button onclick="toggleSettings()" class="drop-toggle">
-          <img src="./assets/exit.svg" alt="Exit settings">
+          <img src="./assets/exit.svg" alt="Exit settings" />
         </button>
-        <ul>
-          <li>shit</li>
-          <li>shit</li>
-          <li>shit</li>
-          <li>shit</li>
-          <li>shit</li>
-          <li>shit</li>
-          <li>shit</li>
-          <li>shit</li>
-        </ul>
+        <div id="settings">
+          <div class="setting">Setting 1</div>
+          <div class="setting">Setting 2</div>
+          <div class="setting">Setting 3</div>
+          <div class="setting">Setting 4</div>
+          <div class="setting">Setting 5</div>
+        </div>
       </div>
     </section>
 
@@ -55,7 +52,7 @@
         </div>
       </section>
 
-      <!-- <section id="dropdown-holder">
+      <section id="dropdown-holder">
         <button
           id="drop-toggle2"
           class="drop-toggle"
@@ -68,18 +65,18 @@
           <button id="delete-btn">Delete Mode</button>
         </div>
       </section>
-    </section> -->
+    </section>
 
     <!-- OpenLayers JS -->
     <script src="https://cdn.jsdelivr.net/npm/ol@7.3.0/dist/ol.js"></script>
     <script type="module" src="./main.js"></script>
     <script>
       const dropdownBtn = document.getElementById("drop-toggle");
-      // const dropdownBtn2 = document.getElementById("drop-toggle2");
+      const dropdownBtn2 = document.getElementById("drop-toggle2");
       const dropdownDOM = document.getElementById("dropdown");
-      // const dropdownDOM2 = document.getElementById("dropdown2");
+      const dropdownDOM2 = document.getElementById("dropdown2");
 
-      const settings = document.getElementById("settings");
+      const settings = document.getElementById("elem-settings");
 
       function toggleSettings() {
         settings.classList.toggle("opensett");
@@ -94,26 +91,26 @@
           dropdownBtn.innerHTML = `<img src="./assets/hamburger.svg" alt="Hamburger menu">`;
         }
 
-        // if (dropdownDOM2.classList.contains("show")) {
-        //   dropdownDOM2.classList.remove("show");
-        //   dropdownBtn2.innerHTML = `<img src="./assets/progressiveburger.svg" alt="Hamburger menu">`;
-        // }
+        if (dropdownDOM2.classList.contains("show")) {
+          dropdownDOM2.classList.remove("show");
+          dropdownBtn2.innerHTML = `<img src="./assets/progressiveburger.svg" alt="Hamburger menu">`;
+        }
       }
 
-      // function toggleDropdown2() {
-      //   dropdownDOM2.classList.toggle("show");
+      function toggleDropdown2() {
+        dropdownDOM2.classList.toggle("show");
 
-      //   if (dropdownDOM2.classList.contains("show")) {
-      //     dropdownBtn2.innerHTML = `<img src="./assets/exit.svg" alt="Exit menu">`;
-      //   } else {
-      //     dropdownBtn2.innerHTML = `<img src="./assets/progressiveburger.svg" alt="Hamburger menu">`;
-      //   }
+        if (dropdownDOM2.classList.contains("show")) {
+          dropdownBtn2.innerHTML = `<img src="./assets/exit.svg" alt="Exit menu">`;
+        } else {
+          dropdownBtn2.innerHTML = `<img src="./assets/progressiveburger.svg" alt="Hamburger menu">`;
+        }
 
-      //   if (dropdownDOM.classList.contains("show")) {
-      //     dropdownDOM.classList.remove("show");
-      //     dropdownBtn.innerHTML = `<img src="./assets/hamburger.svg" alt="Hamburger menu">`;
-      //   }
-      // }
+        if (dropdownDOM.classList.contains("show")) {
+          dropdownDOM.classList.remove("show");
+          dropdownBtn.innerHTML = `<img src="./assets/hamburger.svg" alt="Hamburger menu">`;
+        }
+      }
     </script>
   </body>
 </html>
