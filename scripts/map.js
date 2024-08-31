@@ -64,7 +64,13 @@ loadMarkersFromLocalStorage(map, vectorSource);
 export function addPopupOnClick(feature, popup, popupContent) {
   const coordinates = feature.getGeometry().getCoordinates();
   const name = feature.get("name");
-  popupContent.innerHTML = `<strong>${name}</strong>`;
+  popupContent.innerHTML = `<div>
+                              <h2>${name}</h2>
+                              <p>Other info... Maybe button and functions and shit. IDK.</p>
+                              <p>Depth: ... m</p>
+                              <p>Structure: ... m</p>
+                              <p>Bottom: ... m</p>
+                            </div>`;
   popup.setPosition(coordinates);
   popup.getElement().style.display = "block";
 }

@@ -2,7 +2,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-size: 18px;
+  font-size: 17px;
+  font-family: Verdana, sans-serif;
 }
 
 html,
@@ -189,7 +190,7 @@ body {
 .dropdown button {
   white-space: nowrap;
   padding: 5px 10px;
-  font-size: 17px;
+  font-size: 16px;
   background-color: white;
   border: none;
   border-radius: 7px;
@@ -197,15 +198,45 @@ body {
 }
 
 .popup {
+  width: 350px;
   position: absolute;
   background: white;
   border: 1px solid black;
   padding: 10px;
   display: none;
+  border: none;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 10px;
+}
+
+.popup div {
+  position: relative;
 }
 
 .popup .close {
+  width: 25px;
+  height: 25px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 10px;
   cursor: pointer;
+  background-color: white;
+  border: none;
+  border-radius: 2px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 5;
+}
+
+#popup-content p {
+  font-size: 16px;
+}
+
+#popup-content h2 {
+  font-size: 17px;
+  margin-top: 2px;
+  margin-bottom: 8px;
 }
 
 ul li {
@@ -219,5 +250,9 @@ ul li a {
   #searchbar {
     left: 65px;
     right: 65px;
+  }
+
+  .popup {
+    width: 300px;
   }
 }

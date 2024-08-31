@@ -26,6 +26,7 @@ const popup = new ol.Overlay({
   autoPan: true,
   positioning: "bottom-center",
 });
+
 map.addOverlay(popup);
 
 // Add a click event listener on the map to place markers
