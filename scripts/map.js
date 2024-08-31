@@ -39,8 +39,6 @@ export function addMarker(coordinate) {
 
   vectorSource.addFeature(marker);
 
-  saveMarkersToLocalStorage(map, vectorSource);
-
   // Create a popup element
   const popup = document.createElement("div");
   popup.className = "ol-popup";
@@ -57,9 +55,19 @@ export function addMarker(coordinate) {
   });
 
   map.addOverlay(overlay);
+
+  saveMarkersToLocalStorage(map, vectorSource);
 }
 
 loadMarkersFromLocalStorage(map, vectorSource);
+
+export function addPopupOnClick(feature, popup, popupContent) {
+  const coordinates = feature.getGeometry().getCoordinates();
+  const name = feature.get("name");
+  popupContent.innerHTML = `<strong>${name}</strong>`;
+  popup.setPosition(coordinates);
+  popup.getElement().style.display = "block";
+}
 
 function generateUUID() {
   return crypto.randomUUID();

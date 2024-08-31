@@ -3,6 +3,8 @@ const dropdownBtn2 = document.getElementById("drop-toggle2");
 const dropdownDOM = document.getElementById("dropdown");
 const dropdownDOM2 = document.getElementById("dropdown2");
 
+const popup = document.getElementById("popup");
+
 const settings = document.getElementById("elem-settings");
 
 function toggleSettings() {
@@ -38,3 +40,7 @@ function toggleDropdown2() {
     dropdownBtn.innerHTML = `<img src="./assets/hamburger.svg" alt="Hamburger menu">`;
   }
 }
+
+document.querySelector(".close").addEventListener("click", (e) => {
+  popup.style.display = "none";
+});
