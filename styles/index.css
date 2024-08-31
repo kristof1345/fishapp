@@ -49,6 +49,7 @@ body {
   background-color: white !important;
   font-size: 1.5em !important;
   margin: 0 !important;
+  cursor: pointer;
 }
 
 .ol-zoom-in {
@@ -83,8 +84,6 @@ body {
 
 #settings-holder {
   position: absolute;
-  /* display: flex; */
-  /* flex-direction: column; */
   top: 10px;
   left: 10px;
 }
@@ -142,6 +141,7 @@ body {
   padding: 6px;
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 10px;
+  cursor: pointer;
 }
 
 #dropdown-holder {
@@ -160,6 +160,7 @@ body {
   background-color: white;
   border: none;
   border-radius: 10px;
+  cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 10px;
 }
 
@@ -238,6 +239,20 @@ body {
   font-size: 17px;
   margin-top: 2px;
   margin-bottom: 8px;
+}
+
+.setting {
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.setting span {
+  text-decoration: underline;
+  transition: all 0.5s;
+}
+
+.setting span:hover {
+  text-decoration: none;
 }
 
 ul li {

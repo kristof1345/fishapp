@@ -2,6 +2,19 @@ import {
   saveMarkersToLocalStorage,
   loadMarkersFromLocalStorage,
 } from "./maphelpers.js";
+import { supabase } from "./supa.js";
+
+let default_coordinates = [10.412582, 55.165127];
+
+try {
+  const { data, error } = await supabase
+    .from("map")
+    .select("start_coordinates");
+
+  default_coordinates = data[0].start_coordinates;
+} catch (error) {
+  console.log(error);
+}
 
 // Initialize the map with a view centered on a default location
 export const map = new ol.Map({
@@ -12,7 +25,7 @@ export const map = new ol.Map({
     }),
   ],
   view: new ol.View({
-    center: ol.proj.fromLonLat([17.412582, 48.165127]), // Centered on Senec
+    center: ol.proj.fromLonLat(default_coordinates), // Centered on Senec
     zoom: 18.3,
   }),
 });

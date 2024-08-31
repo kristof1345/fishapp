@@ -1,3 +1,5 @@
+// import { supabase } from "./supa.js";
+
 const dropdownBtn = document.getElementById("drop-toggle");
 const dropdownBtn2 = document.getElementById("drop-toggle2");
 const dropdownDOM = document.getElementById("dropdown");

@@ -5,7 +5,9 @@ import {
   addPopupOnClick,
 } from "./scripts/map.js";
 import { saveMarkersToLocalStorage } from "./scripts/maphelpers.js";
+import { supabase } from "./scripts/supa.js";
 
+const setDefLocationBtn = document.getElementById("set-def-location");
 const popupContent = document.getElementById("popup-content");
 
 let addFishMode = false;
@@ -54,4 +56,19 @@ map.on("click", function (event) {
       addPopupOnClick(feature, popup, popupContent);
     }
   });
+});
+
+setDefLocationBtn.addEventListener("click", async () => {
+  let coordinates = ol.proj.toLonLat(map.getView().getCenter());
+
+  console.log(coordinates);
+
+  const { data, error } = await supabase
+    .from("map")
+    .update({ start_coordinates: coordinates })
+    .eq("id", 2);
+
+  if (error) {
+    console.error(error);
+  }
 });
