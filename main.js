@@ -13,6 +13,9 @@ const popupContent = document.getElementById("popup-content");
 let addFishMode = false;
 let deleteMode = false;
 
+let addDepthMode = false;
+let deleteDepthMode = false;
+
 document.getElementById("add-fish-btn").addEventListener("click", function () {
   addFishMode = !addFishMode;
   this.textContent = addFishMode ? "Exit Mode" : "Add Marker";
@@ -22,6 +25,18 @@ document.getElementById("delete-btn").addEventListener("click", function () {
   deleteMode = !deleteMode;
   this.textContent = deleteMode ? "Exit Mode" : "Delete Mode";
 });
+
+document.getElementById("add-depth-btn").addEventListener("click", function () {
+  addDepthMode = !addDepthMode;
+  this.textContent = addDepthMode ? "Exit Mode" : "Add Depth Marker";
+});
+
+document
+  .getElementById("delete-depth-btn")
+  .addEventListener("click", function () {
+    deleteDepthMode = !deleteDepthMode;
+    this.textContent = deleteDepthMode ? "Exit Mode" : "Delete Mode";
+  });
 
 const popup = new ol.Overlay({
   element: document.getElementById("popup"),
