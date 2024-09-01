@@ -39,7 +39,7 @@ function toggleDropdown2() {
 }
 
 function toggleDropdown3() {
-  if (dropdownDOM3.classList.contains("show")) {
+  if (!dropdownDOM3.classList.contains("show")) {
     dropdownDOM3.classList.add("show");
     dropdownBtn3.innerHTML = `<img src="./assets/exit.svg" alt="Exit eye menu">`;
   } else {
