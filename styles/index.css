@@ -158,10 +158,15 @@ body {
   justify-content: center;
   align-items: center;
   background-color: white;
+  color: black;
   border: none;
   border-radius: 10px;
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 10px;
+}
+
+.drop-toggle img {
+  fill: black;
 }
 
 .drop-toggle img {

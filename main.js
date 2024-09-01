@@ -59,16 +59,18 @@ map.on("click", function (event) {
 });
 
 setDefLocationBtn.addEventListener("click", async () => {
-  let coordinates = ol.proj.toLonLat(map.getView().getCenter());
+  if (confirm("Do you want to set this as the default start-up location?")) {
+    let coordinates = ol.proj.toLonLat(map.getView().getCenter());
 
-  console.log(coordinates);
+    console.log(coordinates);
 
-  const { data, error } = await supabase
-    .from("map")
-    .update({ start_coordinates: coordinates })
-    .eq("id", 2);
+    const { data, error } = await supabase
+      .from("map")
+      .update({ start_coordinates: coordinates })
+      .eq("id", 2);
 
-  if (error) {
-    console.error(error);
+    if (error) {
+      console.error(error);
+    }
   }
 });

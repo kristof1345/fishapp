@@ -26,7 +26,7 @@ export const map = new ol.Map({
   ],
   view: new ol.View({
     center: ol.proj.fromLonLat(default_coordinates), // Centered on Senec
-    zoom: 18.3,
+    zoom: 17.5,
   }),
 });
 

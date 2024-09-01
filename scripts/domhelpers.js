@@ -34,7 +34,7 @@ function toggleDropdown2() {
   if (dropdownDOM2.classList.contains("show")) {
     dropdownBtn2.innerHTML = `<img src="./assets/exit.svg" alt="Exit menu">`;
   } else {
-    dropdownBtn2.innerHTML = `<img src="./assets/progressiveburger.svg" alt="Hamburger menu">`;
+    dropdownBtn2.innerHTML = `<img src="./assets/levels.svg" alt="Hamburger menu">`;
   }
 
   if (dropdownDOM.classList.contains("show")) {
