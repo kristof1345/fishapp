@@ -60,7 +60,6 @@ map.on("click", function (event) {
     if (feature && feature.get("name") === "Fishing Spot") {
       // sketch lol
       vectorSource.removeFeature(feature);
-      alert("you deleted your marker");
       saveMarkersToLocalStorage(map, vectorSource);
     }
     return;

@@ -246,6 +246,10 @@ body {
   margin-bottom: 8px;
 }
 
+#settings {
+  margin-top: 10px;
+}
+
 .setting {
   margin-bottom: 10px;
   cursor: pointer;

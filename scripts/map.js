@@ -46,6 +46,7 @@ export function addMarker(coordinate) {
   const marker = new ol.Feature({
     geometry: new ol.geom.Point(coordinate),
     name: "Fishing Spot",
+    bottom: "Gravel",
   });
 
   marker.setId(generateUUID());
@@ -77,12 +78,13 @@ loadMarkersFromLocalStorage(map, vectorSource);
 export function addPopupOnClick(feature, popup, popupContent) {
   const coordinates = feature.getGeometry().getCoordinates();
   const name = feature.get("name");
+  const bottom = feature.get("bottom");
   popupContent.innerHTML = `<div>
                               <h2>${name}</h2>
                               <p>Other info... Maybe button and functions and shit. IDK.</p>
                               <p>Depth: ... m</p>
                               <p>Structure: ... m</p>
-                              <p>Bottom: ... m</p>
+                              <p>Bottom: ${bottom}.</p>
                             </div>`;
   popup.setPosition(coordinates);
   popup.getElement().style.display = "block";
