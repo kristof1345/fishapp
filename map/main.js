@@ -9,6 +9,7 @@ import { supabase } from "../scripts/supa.js";
 
 const setDefLocationBtn = document.getElementById("set-def-location");
 const popupContent = document.getElementById("popup-content");
+const usernameDOM = document.getElementById("username");
 
 let addFishMode = false;
 let deleteMode = false;
@@ -16,8 +17,7 @@ let deleteMode = false;
 let addDepthMode = false;
 let deleteDepthMode = false;
 
-// const userToken = localStorage.getItem("user");
-// const user = JSON.parse(userToken);
+let usrname;
 
 async function checkSession() {
   const {
@@ -29,6 +29,9 @@ async function checkSession() {
     console.error("Error fetching session:", error);
   } else if (session) {
     console.log("Logged-in user:", session.user.id);
+    usrname = session.user.user_metadata.username;
+    usernameDOM.innerHTML = usrname;
+    console.log(usrname);
     // You can redirect or display user-specific content here
   } else {
     window.location.pathname = "/redirect";
