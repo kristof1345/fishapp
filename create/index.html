@@ -3,28 +3,31 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./styles/index.css" />
+    <link rel="stylesheet" href="../styles/index.css" />
     <title>Fishing Spot Tracker</title>
   </head>
   <body id="signup-wrapper">
     <section>
-      <div id="signup-signin">Log In</div>
+      <div id="signup-signin">Create Account</div>
       <form id="sign-up-form">
-        <label for="fname">Email address:</label><br />
-        <!-- <input type="text" id="email-address" name="email" /><br /> -->
+        <label for="username">Username:</label><br />
+        <input type="text" id="username" name="username" required /><br />
+
+        <label for="email">Email address:</label><br />
         <input type="email" id="email" name="email" required /><br />
-        <label for="lname">Password:</label><br />
+
+        <label for="password">Password:</label><br />
         <input type="password" id="password" name="password" /><br />
 
         <p>
-          If you don't have an account yet.
-          <a href="/create">Create one here.</a>
+          If you have an account.
+          <a href="/">Log in here.</a>
         </p>
 
         <input type="submit" value="Submit" />
       </form>
     </section>
 
-    <script src="./scripts/login.js" type="module"></script>
+    <script src="../scripts/signup.js" type="module"></script>
   </body>
 </html>

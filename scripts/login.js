@@ -2,18 +2,10 @@ import { supabase } from "./supa.js";
 
 const signUpForm = document.getElementById("sign-up-form");
 
-async function signUpNewUser(email, password, username) {
-  const { data, error } = await supabase.auth.signUp({
+async function signInWithEmail(email, password) {
+  const { data, error } = await supabase.auth.signInWithPassword({
     email: email,
     password: password,
-    // options: {
-    //   emailRedirectTo: "http://127.0.0.1:5500/map",
-    // },
-    options: {
-      data: {
-        username: username, // Add additional user data here
-      },
-    },
   });
 
   if (error) {
@@ -26,17 +18,16 @@ async function signUpNewUser(email, password, username) {
 signUpForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  let signupData;
+  let loginData;
 
   const formData = new FormData(e.target);
 
   const email = formData.get("email");
   const password = formData.get("password");
-  const username = formData.get("username");
 
-  signupData = await signUpNewUser(email, password, username);
+  loginData = await signInWithEmail(email, password);
 
-  if (signupData) {
+  if (loginData) {
     window.location.pathname = "/map";
   }
 });
