@@ -6,6 +6,7 @@ import { supabase } from "./supa.js";
 
 let default_coordinates = [10.412582, 55.165127];
 
+// TODO: Rework this to select only the row which matches the userid, but first get the userid
 try {
   const { data, error } = await supabase
     .from("map")
@@ -13,7 +14,7 @@ try {
 
   default_coordinates = data[0].start_coordinates;
 } catch (error) {
-  console.log(error);
+  console.error(error);
 }
 
 // Initialize the map with a view centered on a default location
