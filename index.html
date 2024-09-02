@@ -3,97 +3,35 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fishing Spot Tracker with OpenLayers</title>
-
     <link rel="stylesheet" href="./styles/index.css" />
-    <!-- OpenLayers CSS -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/ol@7.3.0/ol.css"
-      type="text/css"
-    />
+    <title>Fishing Spot Tracker</title>
   </head>
-  <body>
-    <div id="map"></div>
+  <body id="signup-wrapper">
+    <section>
+      <div id="signup-signin">Sign Up/Log In</div>
+      <form id="sign-up-form">
+        <label for="fname">Email address:</label><br />
+        <!-- <input type="text" id="email-address" name="email" /><br /> -->
+        <input type="email" id="email" name="email" required /><br />
+        <label for="lname">Password:</label><br />
+        <input type="password" id="password" name="password" /><br />
 
-    <div id="popup" class="popup">
-      <div>
-        <button class="close">
-          <img src="./assets/exit.svg" alt="Exit" />
-        </button>
-      </div>
-      <div id="popup-content"></div>
-    </div>
-
-    <section id="searchbar">
-      <input type="text" placeholder="Search a city near your lake..." />
+        <input
+          type="radio"
+          id="sign-in"
+          name="fav_language"
+          value="SIGN-IN"
+          checked
+        />
+        <label for="sign-in">Log In</label><br />
+        <input type="radio" id="sign-up" name="fav_language" value="SIGN-UP" />
+        <label for="sing-up"
+          >Sign Up(We will send you a confirmation email)</label
+        ><br />
+        <input type="submit" value="Submit" />
+      </form>
     </section>
 
-    <section id="settings-holder">
-      <button onclick="toggleSettings()">
-        <img src="./assets/settings.svg" alt="Settings" />
-      </button>
-    </section>
-
-    <section id="elem-settings" class="sett">
-      <div>
-        <button onclick="toggleSettings()" class="drop-toggle">
-          <img src="./assets/exit.svg" alt="Exit settings" />
-        </button>
-        <div id="settings">
-          <div class="setting">
-            <span id="set-def-location"
-              >Set location as default on app start</span
-            >
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="dropdowns">
-      <section id="dropdown-holder">
-        <button id="drop-toggle" class="drop-toggle" onclick="toggleDropdown()">
-          <img src="./assets/hamburger.svg" alt="Hamburger menu" />
-        </button>
-        <div class="dropdown" id="dropdown">
-          <button id="add-fish-btn">Add Marker</button>
-          <button id="delete-btn">Delete Mode</button>
-        </div>
-      </section>
-
-      <section id="dropdown-holder">
-        <button
-          id="drop-toggle2"
-          class="drop-toggle"
-          onclick="toggleDropdown2()"
-        >
-          <img src="./assets/levels.svg" alt="Levels menu" />
-        </button>
-        <div class="dropdown" id="dropdown2">
-          <button id="add-depth-btn">Add Depth Marker</button>
-          <button id="delete-depth-btn">Delete Mode</button>
-        </div>
-      </section>
-
-      <section id="dropdown-holder">
-        <button
-          id="drop-toggle3"
-          class="drop-toggle"
-          onclick="toggleDropdown3()"
-        >
-          <img src="./assets/eye.svg" alt="Eye menu" />
-        </button>
-        <div class="dropdown" id="dropdown3">
-          <button>View 1</button>
-          <button>View 2</button>
-        </div>
-      </section>
-    </section>
-
-    <!-- OpenLayers JS -->
-    <script src="https://cdn.jsdelivr.net/npm/ol@7.3.0/dist/ol.js"></script>
-    <script type="module" src="./main.js"></script>
-    <script src="./scripts/domhelpers.js"></script>
-    <script src="./scripts/supa.js" type="module"></script>
+    <script src="./scripts/signup.js" type="module"></script>
   </body>
 </html>

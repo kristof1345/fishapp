@@ -21,30 +21,30 @@ function toggleSettings() {
 function toggleDropdown() {
   if (!dropdownDOM.classList.contains("show")) {
     dropdownDOM.classList.add("show");
-    dropdownBtn.innerHTML = `<img src="./assets/exit.svg" alt="Exit hamburger menu">`;
+    dropdownBtn.innerHTML = `<img src="../assets/exit.svg" alt="Exit hamburger menu">`;
   } else {
     dropdownDOM.classList.remove("show");
-    dropdownBtn.innerHTML = `<img src="./assets/hamburger.svg" alt="Hamburger menu">`;
+    dropdownBtn.innerHTML = `<img src="../assets/hamburger.svg" alt="Hamburger menu">`;
   }
 }
 
 function toggleDropdown2() {
   if (!dropdownDOM2.classList.contains("show")) {
     dropdownDOM2.classList.add("show");
-    dropdownBtn2.innerHTML = `<img src="./assets/exit.svg" alt="Exit levels menu">`;
+    dropdownBtn2.innerHTML = `<img src="../assets/exit.svg" alt="Exit levels menu">`;
   } else {
     dropdownDOM2.classList.remove("show");
-    dropdownBtn2.innerHTML = `<img src="./assets/levels.svg" alt="Levels menu">`;
+    dropdownBtn2.innerHTML = `<img src="../assets/levels.svg" alt="Levels menu">`;
   }
 }
 
 function toggleDropdown3() {
   if (!dropdownDOM3.classList.contains("show")) {
     dropdownDOM3.classList.add("show");
-    dropdownBtn3.innerHTML = `<img src="./assets/exit.svg" alt="Exit eye menu">`;
+    dropdownBtn3.innerHTML = `<img src="../assets/exit.svg" alt="Exit eye menu">`;
   } else {
     dropdownDOM3.classList.remove("show");
-    dropdownBtn3.innerHTML = `<img src="./assets/eye.svg" alt="Eye icon">`;
+    dropdownBtn3.innerHTML = `<img src="../assets/eye.svg" alt="Eye icon">`;
   }
 }
 

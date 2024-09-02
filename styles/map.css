@@ -1,0 +1,283 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 17px;
+  font-family: Verdana, sans-serif;
+}
+
+html,
+body {
+  touch-action: pan-x pan-y;
+  height: 100%;
+  max-height: 100%;
+  overflow: hidden;
+}
+
+body {
+  position: fixed;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+#map {
+  height: 100%;
+  width: 100%;
+}
+
+.ol-zoom {
+  position: absolute;
+  top: 87.5% !important;
+  left: 10px !important;
+}
+
+.ol-control {
+  background-color: transparent !important;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 10px;
+  border-radius: 10px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.ol-zoom-in,
+.ol-zoom-out {
+  color: black !important;
+  background-color: white !important;
+  font-size: 1.5em !important;
+  margin: 0 !important;
+  cursor: pointer;
+}
+
+.ol-zoom-in {
+  border-top-left-radius: 10px !important;
+  border-top-right-radius: 10px !important;
+  margin-bottom: 1px !important;
+}
+.ol-zoom-out {
+  border-bottom-left-radius: 10px !important;
+  border-bottom-right-radius: 10px !important;
+}
+
+.ol-popup {
+  background-color: white;
+  border-radius: 5px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  font-size: 12px;
+  max-width: 200px;
+  white-space: nowrap;
+}
+
+#dropdowns {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  top: 10px;
+  right: 10px;
+}
+
+#settings-holder {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+#elem-settings {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #fff;
+  width: 300px;
+  height: 100%;
+  transition: transform 0.35s;
+  padding: 10px;
+  box-shadow: 4px 0px 17px -4px rgba(0, 0, 0, 0.5);
+}
+
+#elem-settings div button {
+  position: relative;
+  right: -234.5px;
+}
+
+.sett {
+  transform: translate3d(-350px, 0, 0);
+}
+
+.opensett {
+  transform: translate3d(0, 0, 0);
+}
+
+#searchbar {
+  top: 10px;
+  left: 100px;
+  right: 100px;
+  position: absolute;
+}
+
+#searchbar input {
+  width: 100%;
+  height: 45px;
+  border-radius: 10px;
+  border: none;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 10px;
+  text-align: center;
+}
+
+#settings-holder button {
+  width: 45px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border: none;
+  padding: 6px;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 10px;
+  cursor: pointer;
+}
+
+#dropdown-holder {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: end;
+}
+
+.drop-toggle {
+  width: 45px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  color: black;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 10px;
+}
+
+.drop-toggle img {
+  fill: black;
+}
+
+.drop-toggle img {
+  width: 28px;
+}
+
+.show {
+  display: flex !important;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.dropdown {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  /* transition: all 1s; */
+  animation: fadeIn 0.3s;
+}
+
+.dropdown button {
+  white-space: nowrap;
+  padding: 5px 10px;
+  font-size: 16px;
+  background-color: white;
+  border: none;
+  border-radius: 7px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 10px;
+}
+
+.popup {
+  width: 350px;
+  position: absolute;
+  background: white;
+  border: 1px solid black;
+  padding: 10px;
+  display: none;
+  border: none;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 10px;
+}
+
+.popup div {
+  position: relative;
+}
+
+.popup .close {
+  width: 25px;
+  height: 25px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 10px;
+  cursor: pointer;
+  background-color: white;
+  border: none;
+  border-radius: 2px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 5;
+}
+
+#popup-content p {
+  font-size: 16px;
+}
+
+#popup-content h2 {
+  font-size: 17px;
+  margin-top: 2px;
+  margin-bottom: 8px;
+}
+
+#settings {
+  margin-top: 10px;
+}
+
+.setting {
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.setting span {
+  text-decoration: underline;
+  transition: all 0.5s;
+}
+
+.setting span:hover {
+  text-decoration: none;
+}
+
+ul li {
+  font-size: 10px;
+}
+ul li a {
+  font-size: 10px;
+}
+
+@media (max-width: 600px) {
+  #searchbar {
+    left: 65px;
+    right: 65px;
+  }
+
+  .popup {
+    width: 300px;
+  }
+}

@@ -3,9 +3,9 @@ import {
   addMarker,
   vectorSource,
   addPopupOnClick,
-} from "./scripts/map.js";
-import { saveMarkersToLocalStorage } from "./scripts/maphelpers.js";
-import { supabase } from "./scripts/supa.js";
+} from "../scripts/map.js";
+import { saveMarkersToLocalStorage } from "../scripts/maphelpers.js";
+import { supabase } from "../scripts/supa.js";
 
 const setDefLocationBtn = document.getElementById("set-def-location");
 const popupContent = document.getElementById("popup-content");
@@ -15,6 +15,32 @@ let deleteMode = false;
 
 let addDepthMode = false;
 let deleteDepthMode = false;
+
+// const userToken = localStorage.getItem("user");
+// const user = JSON.parse(userToken);
+
+async function checkSession() {
+  const {
+    data: { session },
+    error,
+  } = await supabase.auth.getSession();
+
+  if (error) {
+    console.error("Error fetching session:", error);
+  } else if (session) {
+    console.log("Logged-in user:", session.user.id);
+    // You can redirect or display user-specific content here
+  } else {
+    window.location.pathname = "/redirect";
+  }
+}
+
+// Call the function to check session status
+checkSession();
+
+// if (user == null) {
+//   window.location.pathname = "/redirect";
+// }
 
 document.getElementById("add-fish-btn").addEventListener("click", function () {
   addFishMode = !addFishMode;
