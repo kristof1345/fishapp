@@ -1,11 +1,6 @@
-import {
-  map,
-  addMarker,
-  vectorSource,
-  addPopupOnClick,
-} from "../scripts/map.js";
-import { saveMarkersToLocalStorage } from "../scripts/maphelpers.js";
-import { supabase } from "../scripts/supa.js";
+import { map, addMarker, vectorSource, addPopupOnClick } from "./map.js";
+import { saveMarkersToLocalStorage } from "./maphelpers.js";
+import { supabase } from "./supa.js";
 
 const setDefLocationBtn = document.getElementById("set-def-location");
 const popupContent = document.getElementById("popup-content");
