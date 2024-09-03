@@ -26,8 +26,6 @@ async function checkSession() {
     console.log("Logged-in user:", session.user.id);
     usrname = session.user.user_metadata.username;
     usernameDOM.innerHTML = usrname;
-    console.log(usrname);
-    // You can redirect or display user-specific content here
   } else {
     window.location.pathname = "/redirect";
   }

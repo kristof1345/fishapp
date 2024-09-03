@@ -17,7 +17,8 @@ async function signUpNewUser(email, password, username) {
   });
 
   if (error) {
-    console.log(error);
+    console.error(error);
+    alert(error.message);
   } else {
     return data;
   }

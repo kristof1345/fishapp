@@ -9,7 +9,8 @@ async function signInWithEmail(email, password) {
   });
 
   if (error) {
-    console.log(error);
+    console.error(error);
+    alert(error.message);
   } else {
     return data;
   }
