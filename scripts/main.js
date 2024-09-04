@@ -35,9 +35,34 @@ async function checkSession() {
 // Call the function to check session status
 checkSession();
 
-// if (user == null) {
-//   window.location.pathname = "/redirect";
-// }
+document.getElementById("searchbar").addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const query = document.getElementById("search-input").value;
+  const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
+    query
+  )}&format=json&addressdetails=1`;
+
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.length > 0) {
+        const firstResult = data[0];
+        const lon = firstResult.lon;
+        const lat = firstResult.lat;
+        const coord = ol.proj.fromLonLat([lon, lat]);
+
+        // Center the map on the search result
+        map.getView().setCenter(coord);
+        map.getView().setZoom(14);
+      } else {
+        alert("No results found");
+      }
+    })
+    .catch((error) => {
+      console.error("Error fetching data:", error);
+    });
+});
 
 document.getElementById("add-fish-btn").addEventListener("click", function () {
   addFishMode = !addFishMode;

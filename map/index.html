@@ -25,9 +25,16 @@
       <div id="popup-content"></div>
     </div>
 
-    <section id="searchbar">
-      <input type="text" placeholder="Search a city near your lake..." />
-    </section>
+    <form id="searchbar">
+      <input
+        type="text"
+        placeholder="Search a city near your lake..."
+        id="search-input"
+      />
+      <button type="submit">
+        <img src="../assets/search.svg" alt="Search" id="search-button" />
+      </button>
+    </form>
 
     <section id="settings-holder">
       <button onclick="toggleSettings()">
