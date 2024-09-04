@@ -226,6 +226,52 @@ body {
   box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 10px;
 }
 
+#add-spot-popup {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  background: rgba(95, 95, 95, 0.5);
+  padding: 10px;
+  align-items: center;
+  justify-content: center;
+  display: none;
+}
+
+#popup-form {
+  background-color: white;
+  position: relative;
+  padding: 25px;
+  border-radius: 10px;
+}
+
+#popup-form > button {
+  border: solid 2px black;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: white;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+#popup-form > button:hover {
+  border: solid 2px transparent;
+}
+
+#name,
+#depth,
+#structure,
+#bottom {
+  border-radius: 5px;
+  width: 100%;
+  margin-bottom: 5px;
+  padding: 5px 10px;
+  border: solid 2px black;
+}
+
 .popup {
   width: 350px;
   position: absolute;

@@ -25,17 +25,17 @@ export async function saveMarkersToLocalStorage(map, vectorSource) {
     featureProjection: map.getView().getProjection(),
   });
 
-  const coor = [17.4124668891912, 48.1651322901556];
-
   const { data, error } = await supabase
     .from("map")
     .select()
     .filter("userid", "eq", user.id);
 
+  console.log(data);
+
   if (!data.length) {
     const { data, error } = await supabase
       .from("map")
-      .insert([{ geom: geojson, start_coordinates: coor, userid: user.id }]);
+      .insert([{ geom: geojson, userid: user.id }]);
     if (error) {
       console.error(`Error inserting record:`, error);
     }

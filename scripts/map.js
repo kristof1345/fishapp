@@ -4,15 +4,43 @@ import {
 } from "./maphelpers.js";
 import { supabase } from "./supa.js";
 
-let default_coordinates = [10.412582, 55.165127];
+let default_coordinates = [17.421, 48.1711];
+
+let user;
+
+async function checkSession() {
+  const {
+    data: { session },
+    error,
+  } = await supabase.auth.getSession();
+
+  if (error) {
+    console.error("Error fetching session:", error);
+  } else if (session) {
+    console.log("Logged-in user:", session.user.id);
+    user = session.user;
+  }
+}
+
+// Call the function to check session status
+await checkSession();
 
 // TODO: Rework this to select only the row which matches the userid, but first get the userid
 try {
   const { data, error } = await supabase
     .from("map")
-    .select("start_coordinates");
+    .select()
+    .filter("userid", "eq", user.id);
 
-  default_coordinates = data[0].start_coordinates;
+  if (error) {
+    console.error(`Error returning data from db:`, error);
+  }
+
+  console.log(data);
+
+  if (data[0]) {
+    default_coordinates = data[0].start_coordinates;
+  }
 } catch (error) {
   console.error(error);
 }
@@ -42,34 +70,19 @@ export const vectorLayer = new ol.layer.Vector({
 map.addLayer(vectorLayer);
 
 // Function to add a marker at the clicked location
-export function addMarker(coordinate) {
-  const lonLat = ol.proj.toLonLat(coordinate);
+export function addMarker(coordinates, formdata) {
   const marker = new ol.Feature({
-    geometry: new ol.geom.Point(coordinate),
-    name: "Fishing Spot",
-    bottom: "Gravel",
+    geometry: new ol.geom.Point(coordinates),
+    type: "Fishing Spot",
+    name: formdata.get("name"),
+    bottom: formdata.get("bottom") || "...",
+    depth: formdata.get("depth") || "...",
+    structure: formdata.get("structure") || "...",
   });
 
   marker.setId(generateUUID());
 
   vectorSource.addFeature(marker);
-
-  // Create a popup element
-  const popup = document.createElement("div");
-  popup.className = "ol-popup";
-  popup.innerHTML = `Fish caught here!<br>Lat: ${lonLat[1].toFixed(
-    5
-  )}, Lng: ${lonLat[0].toFixed(5)}`;
-
-  const overlay = new ol.Overlay({
-    element: popup,
-    positioning: "bottom-center",
-    stopEvent: false,
-    offset: [0, -15],
-    position: coordinate,
-  });
-
-  map.addOverlay(overlay);
 
   saveMarkersToLocalStorage(map, vectorSource);
 }

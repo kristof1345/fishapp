@@ -7,6 +7,12 @@ const logoutBtn = document.getElementById("logout");
 const popupContent = document.getElementById("popup-content");
 const usernameDOM = document.getElementById("username");
 
+const addFishPopup = document.getElementById("add-spot-popup");
+const popupForm = document.getElementById("popup-form");
+
+const addFishBtn = document.getElementById("add-fish-btn");
+const deleteFishBtn = document.getElementById("delete-btn");
+
 let addFishMode = false;
 let deleteMode = false;
 
@@ -14,6 +20,7 @@ let addDepthMode = false;
 let deleteDepthMode = false;
 
 let usrname;
+let userID;
 
 async function checkSession() {
   const {
@@ -25,6 +32,7 @@ async function checkSession() {
     console.error("Error fetching session:", error);
   } else if (session) {
     console.log("Logged-in user:", session.user.id);
+    userID = session.user.id;
     usrname = session.user.user_metadata.username;
     usernameDOM.innerHTML = usrname;
   } else {
@@ -64,14 +72,24 @@ document.getElementById("searchbar").addEventListener("submit", function (e) {
     });
 });
 
-document.getElementById("add-fish-btn").addEventListener("click", function () {
+addFishBtn.addEventListener("click", function () {
   addFishMode = !addFishMode;
-  this.textContent = addFishMode ? "Exit Mode" : "Add Marker";
+  addFishBtn.textContent = addFishMode ? "Exit Mode" : "Add Marker";
+
+  if (deleteMode) {
+    deleteMode = !deleteMode;
+    deleteFishBtn.textContent = deleteMode ? "Exit Mode" : "Delete Mode";
+  }
 });
 
-document.getElementById("delete-btn").addEventListener("click", function () {
+deleteFishBtn.addEventListener("click", function () {
   deleteMode = !deleteMode;
-  this.textContent = deleteMode ? "Exit Mode" : "Delete Mode";
+  deleteFishBtn.textContent = deleteMode ? "Exit Mode" : "Delete Mode";
+
+  if (addFishMode) {
+    addFishMode = !addFishMode;
+    addFishBtn.textContent = addFishMode ? "Exit Mode" : "Add Marker";
+  }
 });
 
 document.getElementById("add-depth-btn").addEventListener("click", function () {
@@ -92,20 +110,38 @@ const popup = new ol.Overlay({
   positioning: "bottom-center",
 });
 
+// const addFishPopup = new ol.Overlay({
+//   element: document.getElementById("add-spot-popup"),
+//   autoPan: true,
+//   positioning: "bottom-center",
+// });
+
 map.addOverlay(popup);
+// map.addOverlay(addFishPopup);
 
 // Add a click event listener on the map to place markers
 map.on("click", function (event) {
   if (addFishMode) {
-    const coordinate = ol.proj.toLonLat(event.coordinate);
-    addMarker(event.coordinate);
+    addFishPopup.style.display = "flex";
+
+    popupForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const formdata = new FormData(e.target);
+
+      console.log(formdata.get("name"));
+
+      addMarker(event.coordinate, formdata);
+
+      addFishPopup.style.display = "none";
+    });
   }
 
   if (deleteMode) {
     let feature = map.forEachFeatureAtPixel(event.pixel, function (feature) {
       return feature;
     });
-    if (feature && feature.get("name") === "Fishing Spot") {
+    if (feature && feature.get("type") === "Fishing Spot") {
       // sketch lol
       vectorSource.removeFeature(feature);
       saveMarkersToLocalStorage(map, vectorSource);
@@ -114,7 +150,7 @@ map.on("click", function (event) {
   }
 
   map.forEachFeatureAtPixel(event.pixel, function (feature) {
-    if (feature && feature.get("name") === "Fishing Spot") {
+    if (feature && feature.get("type") === "Fishing Spot") {
       addPopupOnClick(feature, popup, popupContent);
     }
   });
@@ -138,8 +174,30 @@ setDefLocationBtn.addEventListener("click", async () => {
 
     const { data, error } = await supabase
       .from("map")
-      .update({ start_coordinates: coordinates })
-      .eq("id", 2);
+      .select()
+      .filter("userid", "eq", userID);
+
+    // const { data, error } = await supabase
+    //   .from("map")
+    //   .update({ start_coordinates: coordinates })
+    //   .eq("id", 2);
+
+    if (!data.length) {
+      const { data, error } = await supabase
+        .from("map")
+        .insert([{ start_coordinates: coordinates, userid: userID }]);
+      if (error) {
+        console.error(`Error inserting record:`, error);
+      }
+    } else {
+      const { data, error } = await supabase
+        .from("map")
+        .update({ start_coordinates: coordinates })
+        .eq("userid", userID);
+      if (error) {
+        console.error(`Error updating record:`, error);
+      }
+    }
 
     if (error) {
       console.error(error);
