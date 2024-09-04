@@ -3,6 +3,7 @@ import { saveMarkersToLocalStorage } from "./maphelpers.js";
 import { supabase } from "./supa.js";
 
 const setDefLocationBtn = document.getElementById("set-def-location");
+const logoutBtn = document.getElementById("logout");
 const popupContent = document.getElementById("popup-content");
 const usernameDOM = document.getElementById("username");
 
@@ -92,6 +93,16 @@ map.on("click", function (event) {
       addPopupOnClick(feature, popup, popupContent);
     }
   });
+});
+
+logoutBtn.addEventListener("click", async () => {
+  const { data, error } = supabase.auth.signOut();
+
+  if (error) {
+    console.error(error);
+  } else {
+    window.location.pathname = "/";
+  }
 });
 
 setDefLocationBtn.addEventListener("click", async () => {

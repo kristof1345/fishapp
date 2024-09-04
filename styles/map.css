@@ -100,7 +100,7 @@ body {
   box-shadow: 4px 0px 17px -4px rgba(0, 0, 0, 0.5);
 }
 
-#elem-settings div button {
+#elem-settings > div > button {
   position: relative;
   right: -234.5px;
 }
@@ -250,6 +250,12 @@ body {
   margin-bottom: 15px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+}
+
+#profile > div {
+  display: flex;
+  align-items: center;
   gap: 10px;
 }
 
@@ -260,6 +266,19 @@ body {
 #username {
   font-size: 20px;
   font-weight: bold;
+}
+
+#logout {
+  font-size: 15px;
+  border: solid 2px black;
+  padding: 3px 8px;
+  border-radius: 5px;
+  background-color: white;
+  cursor: pointer;
+}
+
+#logout:hover {
+  border: solid 2px transparent;
 }
 
 .setting {
