@@ -25,7 +25,6 @@ async function checkSession() {
 // Call the function to check session status
 await checkSession();
 
-// TODO: Rework this to select only the row which matches the userid, but first get the userid
 try {
   const { data, error } = await supabase
     .from("map")
@@ -35,8 +34,6 @@ try {
   if (error) {
     console.error(`Error returning data from db:`, error);
   }
-
-  console.log(data);
 
   if (data[0]) {
     default_coordinates = data[0].start_coordinates;
@@ -75,9 +72,9 @@ export function addMarker(coordinates, formdata) {
     geometry: new ol.geom.Point(coordinates),
     type: "Fishing Spot",
     name: formdata.get("name"),
-    bottom: formdata.get("bottom") || "...",
-    depth: formdata.get("depth") || "...",
-    structure: formdata.get("structure") || "...",
+    bottom: formdata.get("bottom") || "???",
+    depth: formdata.get("depth") || "???",
+    structure: formdata.get("structure") || "???",
   });
 
   marker.setId(generateUUID());
@@ -92,12 +89,13 @@ loadMarkersFromLocalStorage(map, vectorSource);
 export function addPopupOnClick(feature, popup, popupContent) {
   const coordinates = feature.getGeometry().getCoordinates();
   const name = feature.get("name");
+  const depth = feature.get("depth");
+  const structure = feature.get("structure");
   const bottom = feature.get("bottom");
   popupContent.innerHTML = `<div>
                               <h2>${name}</h2>
-                              <p>Other info... Maybe button and functions and shit. IDK.</p>
-                              <p>Depth: ... m</p>
-                              <p>Structure: ... m</p>
+                              <p>Depth: ${depth}m</p>
+                              <p>Structure: ${structure}</p>
                               <p>Bottom: ${bottom}.</p>
                             </div>`;
   popup.setPosition(coordinates);

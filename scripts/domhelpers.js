@@ -14,10 +14,6 @@ const popup = document.getElementById("popup");
 
 const settings = document.getElementById("elem-settings");
 
-function toggleSettings() {
-  settings.classList.toggle("opensett");
-}
-
 function toggleDropdown() {
   if (!dropdownDOM.classList.contains("show")) {
     dropdownDOM.classList.add("show");
@@ -47,18 +43,6 @@ function toggleDropdown3() {
     dropdownBtn3.innerHTML = `<img src="../assets/eye.svg" alt="Eye icon">`;
   }
 }
-
-// function unToggleRest(unless) {
-//   let drops = [...dropdowns].filter((drop) => drop != unless);
-//   console.log(drops);
-
-//   drops.map((drop) => {
-//     if (drop.classList.contains("show")) {
-//       drop.classList.remove("show");
-//       console.log(drop.parentNode.children[0].children[0]);
-//     }
-//   });
-// }
 
 document.querySelector(".close").addEventListener("click", (e) => {
   popup.style.display = "none";

@@ -124,17 +124,25 @@ map.on("click", function (event) {
   if (addFishMode) {
     addFishPopup.style.display = "flex";
 
-    popupForm.addEventListener("submit", (e) => {
-      e.preventDefault();
+    addFishMode = !addFishMode;
+    addFishBtn.textContent = addFishMode ? "Exit Mode" : "Add Marker";
 
-      const formdata = new FormData(e.target);
+    popupForm.addEventListener(
+      "submit",
+      (e) => {
+        e.preventDefault();
 
-      console.log(formdata.get("name"));
+        const formdata = new FormData(e.target);
 
-      addMarker(event.coordinate, formdata);
+        console.log(formdata.get("name"));
 
-      addFishPopup.style.display = "none";
-    });
+        addMarker(event.coordinate, formdata);
+
+        addFishPopup.style.display = "none";
+        popupForm.reset();
+      },
+      { once: true }
+    );
   }
 
   if (deleteMode) {
@@ -149,11 +157,13 @@ map.on("click", function (event) {
     return;
   }
 
-  map.forEachFeatureAtPixel(event.pixel, function (feature) {
-    if (feature && feature.get("type") === "Fishing Spot") {
-      addPopupOnClick(feature, popup, popupContent);
-    }
-  });
+  if (!addFishMode) {
+    map.forEachFeatureAtPixel(event.pixel, function (feature) {
+      if (feature && feature.get("type") === "Fishing Spot") {
+        addPopupOnClick(feature, popup, popupContent);
+      }
+    });
+  }
 });
 
 logoutBtn.addEventListener("click", async () => {

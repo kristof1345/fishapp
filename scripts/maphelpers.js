@@ -30,8 +30,6 @@ export async function saveMarkersToLocalStorage(map, vectorSource) {
     .select()
     .filter("userid", "eq", user.id);
 
-  console.log(data);
-
   if (!data.length) {
     const { data, error } = await supabase
       .from("map")
