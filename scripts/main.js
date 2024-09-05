@@ -13,11 +13,10 @@ const popupForm = document.getElementById("popup-form");
 const addFishBtn = document.getElementById("add-fish-btn");
 const deleteFishBtn = document.getElementById("delete-btn");
 
+const editBtn = document.getElementsByClassName("edit")[0];
+
 let addFishMode = false;
 let deleteMode = false;
-
-let addDepthMode = false;
-let deleteDepthMode = false;
 
 let usrname;
 let userID;
@@ -98,14 +97,7 @@ const popup = new ol.Overlay({
   positioning: "bottom-center",
 });
 
-// const addFishPopup = new ol.Overlay({
-//   element: document.getElementById("add-spot-popup"),
-//   autoPan: true,
-//   positioning: "bottom-center",
-// });
-
 map.addOverlay(popup);
-// map.addOverlay(addFishPopup);
 
 // Add a click event listener on the map to place markers
 map.on("click", function (event) {
@@ -148,7 +140,7 @@ map.on("click", function (event) {
   if (!addFishMode) {
     map.forEachFeatureAtPixel(event.pixel, function (feature) {
       if (feature && feature.get("type") === "Fishing Spot") {
-        addPopupOnClick(feature, popup, popupContent);
+        addPopupOnClick(feature, popup, popupContent, editBtn);
       }
     });
   }
@@ -201,4 +193,15 @@ setDefLocationBtn.addEventListener("click", async () => {
       console.error(error);
     }
   }
+});
+
+editBtn.addEventListener("click", (e) => {
+  const featureID = editBtn.dataset.featureid;
+  const feature = vectorSource.getFeatureById(featureID);
+
+  console.log(feature.values_);
+
+  feature.values_.name = "Hackeeeeed";
+
+  saveMarkersToLocalStorage(map, vectorSource);
 });

@@ -86,7 +86,7 @@ export function addMarker(coordinates, formdata) {
 
 loadMarkersFromLocalStorage(map, vectorSource);
 
-export function addPopupOnClick(feature, popup, popupContent) {
+export function addPopupOnClick(feature, popup, popupContent, editBtn) {
   const coordinates = feature.getGeometry().getCoordinates();
   const name = feature.get("name");
   const depth = feature.get("depth");
@@ -98,6 +98,7 @@ export function addPopupOnClick(feature, popup, popupContent) {
                               <p>Structure: ${structure}</p>
                               <p>Bottom: ${bottom}.</p>
                             </div>`;
+  editBtn.dataset.featureid = feature.getId("id");
   popup.setPosition(coordinates);
   popup.getElement().style.display = "block";
 }
