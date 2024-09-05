@@ -1,10 +1,8 @@
 // import { supabase } from "./supa.js";
 
 const dropdownBtn = document.getElementById("drop-toggle");
-const dropdownBtn2 = document.getElementById("drop-toggle2");
 const dropdownBtn3 = document.getElementById("drop-toggle3");
 const dropdownDOM = document.getElementById("dropdown");
-const dropdownDOM2 = document.getElementById("dropdown2");
 const dropdownDOM3 = document.getElementById("dropdown3");
 
 const dropdowns = document.getElementsByClassName("dropdown");
@@ -14,6 +12,10 @@ const popup = document.getElementById("popup");
 
 const settings = document.getElementById("elem-settings");
 
+function toggleSettings() {
+  settings.classList.toggle("opensett");
+}
+
 function toggleDropdown() {
   if (!dropdownDOM.classList.contains("show")) {
     dropdownDOM.classList.add("show");
@@ -21,16 +23,6 @@ function toggleDropdown() {
   } else {
     dropdownDOM.classList.remove("show");
     dropdownBtn.innerHTML = `<img src="../assets/hamburger.svg" alt="Hamburger menu">`;
-  }
-}
-
-function toggleDropdown2() {
-  if (!dropdownDOM2.classList.contains("show")) {
-    dropdownDOM2.classList.add("show");
-    dropdownBtn2.innerHTML = `<img src="../assets/exit.svg" alt="Exit levels menu">`;
-  } else {
-    dropdownDOM2.classList.remove("show");
-    dropdownBtn2.innerHTML = `<img src="../assets/levels.svg" alt="Levels menu">`;
   }
 }
 

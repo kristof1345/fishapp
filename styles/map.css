@@ -291,17 +291,29 @@ body {
 }
 
 .popup .close {
+  right: 0;
+}
+
+.popup .edit {
+  right: 30px;
+  padding: 1px;
+}
+
+.popup .close,
+.popup .edit {
   width: 25px;
   height: 25px;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 10px;
   cursor: pointer;
   background-color: white;
   border: none;
   border-radius: 2px;
   position: absolute;
   top: 0;
-  right: 0;
   z-index: 5;
+}
+
+.popup .edit > img {
+  width: 100%;
 }
 
 #popup-content p {
@@ -310,6 +322,7 @@ body {
 
 #popup-content h2 {
   font-size: 17px;
+  margin-right: 40px;
   margin-top: 2px;
   margin-bottom: 8px;
 }

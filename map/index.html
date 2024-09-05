@@ -18,6 +18,9 @@
 
     <div id="popup" class="popup">
       <div>
+        <button class="edit">
+          <img src="../assets/edit.svg" alt="Edit" />
+        </button>
         <button class="close">
           <img src="../assets/exit.svg" alt="Exit" />
         </button>
@@ -31,7 +34,7 @@
         <input type="text" name="name" id="name" required />
 
         <label for="depth">Depth</label><br />
-        <input type="number" name="depth" id="depth" />
+        <input type="number" name="depth" id="depth" step="0.01" />
 
         <label for="structure">Structure:</label><br />
         <input type="text" name="structure" id="structure" />
@@ -90,20 +93,6 @@
         <div class="dropdown" id="dropdown">
           <button id="add-fish-btn">Add Marker</button>
           <button id="delete-btn">Delete Mode</button>
-        </div>
-      </section>
-
-      <section id="dropdown-holder">
-        <button
-          id="drop-toggle2"
-          class="drop-toggle"
-          onclick="toggleDropdown2()"
-        >
-          <img src="../assets/levels.svg" alt="Levels menu" />
-        </button>
-        <div class="dropdown" id="dropdown2">
-          <button id="add-depth-btn">Add Depth Marker</button>
-          <button id="delete-depth-btn">Delete Mode</button>
         </div>
       </section>
 

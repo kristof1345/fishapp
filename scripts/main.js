@@ -92,18 +92,6 @@ deleteFishBtn.addEventListener("click", function () {
   }
 });
 
-document.getElementById("add-depth-btn").addEventListener("click", function () {
-  addDepthMode = !addDepthMode;
-  this.textContent = addDepthMode ? "Exit Mode" : "Add Depth Marker";
-});
-
-document
-  .getElementById("delete-depth-btn")
-  .addEventListener("click", function () {
-    deleteDepthMode = !deleteDepthMode;
-    this.textContent = deleteDepthMode ? "Exit Mode" : "Delete Mode";
-  });
-
 const popup = new ol.Overlay({
   element: document.getElementById("popup"),
   autoPan: true,
