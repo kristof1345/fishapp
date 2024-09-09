@@ -15,6 +15,8 @@ const deleteFishBtn = document.getElementById("delete-btn");
 
 const editBtn = document.getElementsByClassName("edit")[0];
 
+const cancelBtn = document.getElementById("cancel");
+
 let addFishMode = false;
 let deleteMode = false;
 
@@ -99,6 +101,19 @@ const popup = new ol.Overlay({
 
 map.addOverlay(popup);
 
+function handlePopupForm(e, coordinates) {
+  e.preventDefault();
+
+  const formdata = new FormData(e.target);
+
+  console.log(formdata.get("name"));
+
+  addMarker(coordinates, formdata);
+
+  addFishPopup.style.display = "none";
+  popupForm.reset();
+}
+
 // Add a click event listener on the map to place markers
 map.on("click", function (event) {
   if (addFishMode) {
@@ -107,22 +122,20 @@ map.on("click", function (event) {
     addFishMode = !addFishMode;
     addFishBtn.textContent = addFishMode ? "Exit Mode" : "Add Marker";
 
-    popupForm.addEventListener(
-      "submit",
-      (e) => {
-        e.preventDefault();
+    const popupFormListener = (e) => {
+      handlePopupForm(e, event.coordinate);
+    };
 
-        const formdata = new FormData(e.target);
+    popupForm.addEventListener("submit", popupFormListener, { once: true });
 
-        console.log(formdata.get("name"));
+    const deleteEventListener = (e) => {
+      e.preventDefault();
+      popupForm.removeEventListener("submit", popupFormListener);
+      addFishPopup.style.display = "none";
+      popupForm.reset();
+    };
 
-        addMarker(event.coordinate, formdata);
-
-        addFishPopup.style.display = "none";
-        popupForm.reset();
-      },
-      { once: true }
-    );
+    cancelBtn.addEventListener("click", deleteEventListener, { once: true });
   }
 
   if (deleteMode) {
@@ -199,9 +212,20 @@ editBtn.addEventListener("click", (e) => {
   const featureID = editBtn.dataset.featureid;
   const feature = vectorSource.getFeatureById(featureID);
 
-  console.log(feature.values_);
+  // DOM input elements
+  const formName = document.getElementById("name");
+  const formDepth = document.getElementById("depth");
+  const formStructure = document.getElementById("structure");
+  const formBottom = document.getElementById("bottom");
 
-  feature.values_.name = "Hackeeeeed";
+  addFishPopup.style.display = "flex";
 
-  saveMarkersToLocalStorage(map, vectorSource);
+  formName.value = feature.values_.name;
+  formDepth.value = feature.values_.depth;
+  formStructure.value = feature.values_.structure;
+  formBottom.value = feature.values_.bottom;
+
+  // handle marker update shit
+
+  // saveMarkersToLocalStorage(map, vectorSource);
 });

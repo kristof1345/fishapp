@@ -67,5 +67,6 @@ export async function loadMarkersFromLocalStorage(map, vectorSource) {
       featureProjection: map.getView().getProjection(),
     });
     vectorSource.addFeatures(features);
+    console.log(features);
   }
 }
