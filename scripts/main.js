@@ -1,7 +1,8 @@
 import { map, addMarker, vectorSource, addPopupOnClick } from "./map.js";
 import {
-  loadMarkersFromLocalStorage,
   saveMarkersToLocalStorage,
+  searchMap,
+  checkSession,
 } from "./maphelpers.js";
 import { supabase } from "./supa.js";
 
@@ -24,60 +25,21 @@ const cancelBtn = document.getElementById("cancel");
 let addFishMode = false;
 let deleteMode = false;
 
-let usrname;
-let userID;
-
-async function checkSession() {
-  const {
-    data: { session },
-    error,
-  } = await supabase.auth.getSession();
-
-  if (error) {
-    console.error("Error fetching session:", error);
-  } else if (session) {
-    console.log("Logged-in user:", session.user.id);
-    userID = session.user.id;
-    usrname = session.user.user_metadata.username;
-    usernameDOM.innerHTML = usrname;
-  } else {
-    window.location.pathname = "/redirect";
-  }
-}
-
 // Call the function to check session status
-checkSession();
+let user = await checkSession();
+
+usernameDOM.innerHTML = user.user_metadata.username;
+let userID = user.id;
 
 document.getElementById("searchbar").addEventListener("submit", function (e) {
   e.preventDefault();
 
   const query = document.getElementById("search-input").value;
-  const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
-    query
-  )}&format=json&addressdetails=1`;
 
-  fetch(url)
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.length > 0) {
-        const firstResult = data[0];
-        const lon = firstResult.lon;
-        const lat = firstResult.lat;
-        const coord = ol.proj.fromLonLat([lon, lat]);
-
-        // Center the map on the search result
-        map.getView().setCenter(coord);
-        map.getView().setZoom(14);
-      } else {
-        alert("No results found");
-      }
-    })
-    .catch((error) => {
-      console.error("Error fetching data:", error);
-    });
+  searchMap(map, query);
 });
 
-addFishBtn.addEventListener("click", function () {
+function toggleFishMode() {
   addFishMode = !addFishMode;
   addFishBtn.textContent = addFishMode ? "Exit Mode" : "Add Marker";
 
@@ -85,9 +47,11 @@ addFishBtn.addEventListener("click", function () {
     deleteMode = !deleteMode;
     deleteFishBtn.textContent = deleteMode ? "Exit Mode" : "Delete Mode";
   }
-});
+}
 
-deleteFishBtn.addEventListener("click", function () {
+addFishBtn.addEventListener("click", toggleFishMode);
+
+function toggleDeleteFishMode() {
   deleteMode = !deleteMode;
   deleteFishBtn.textContent = deleteMode ? "Exit Mode" : "Delete Mode";
 
@@ -95,7 +59,9 @@ deleteFishBtn.addEventListener("click", function () {
     addFishMode = !addFishMode;
     addFishBtn.textContent = addFishMode ? "Exit Mode" : "Add Marker";
   }
-});
+}
+
+deleteFishBtn.addEventListener("click", toggleDeleteFishMode);
 
 const popup = new ol.Overlay({
   element: infoPopUp,
@@ -183,11 +149,6 @@ setDefLocationBtn.addEventListener("click", async () => {
       .from("map")
       .select()
       .filter("userid", "eq", userID);
-
-    // const { data, error } = await supabase
-    //   .from("map")
-    //   .update({ start_coordinates: coordinates })
-    //   .eq("id", 2);
 
     if (!data.length) {
       const { data, error } = await supabase

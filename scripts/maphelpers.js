@@ -1,8 +1,6 @@
 import { supabase } from "./supa.js";
 
-let user;
-
-async function checkSession() {
+export async function checkSession() {
   const {
     data: { session },
     error,
@@ -11,11 +9,13 @@ async function checkSession() {
   if (error) {
     console.error("Error fetching session:", error);
   } else if (session) {
-    user = session.user;
+    return session.user;
+  } else {
+    window.location.pathname = "/redirect";
   }
 }
 
-checkSession();
+let user = await checkSession();
 
 export async function saveMarkersToLocalStorage(map, vectorSource) {
   const features = vectorSource.getFeatures();
@@ -69,4 +69,30 @@ export async function loadMarkersFromLocalStorage(map, vectorSource) {
     vectorSource.addFeatures(features);
     console.log(features);
   }
+}
+
+export function searchMap(map, query) {
+  const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
+    query
+  )}&format=json&addressdetails=1`;
+
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.length > 0) {
+        const firstResult = data[0];
+        const lon = firstResult.lon;
+        const lat = firstResult.lat;
+        const coord = ol.proj.fromLonLat([lon, lat]);
+
+        // Center the map on the search result
+        map.getView().setCenter(coord);
+        map.getView().setZoom(14);
+      } else {
+        alert("No results found");
+      }
+    })
+    .catch((error) => {
+      console.error("Error fetching data:", error);
+    });
 }

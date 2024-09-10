@@ -1,29 +1,14 @@
 import {
   saveMarkersToLocalStorage,
   loadMarkersFromLocalStorage,
+  checkSession,
 } from "./maphelpers.js";
 import { supabase } from "./supa.js";
 
 let default_coordinates = [17.421, 48.1711];
 
-let user;
-
-async function checkSession() {
-  const {
-    data: { session },
-    error,
-  } = await supabase.auth.getSession();
-
-  if (error) {
-    console.error("Error fetching session:", error);
-  } else if (session) {
-    console.log("Logged-in user:", session.user.id);
-    user = session.user;
-  }
-}
-
 // Call the function to check session status
-await checkSession();
+let user = await checkSession();
 
 try {
   const { data, error } = await supabase
