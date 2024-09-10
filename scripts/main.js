@@ -1,5 +1,8 @@
 import { map, addMarker, vectorSource, addPopupOnClick } from "./map.js";
-import { saveMarkersToLocalStorage } from "./maphelpers.js";
+import {
+  loadMarkersFromLocalStorage,
+  saveMarkersToLocalStorage,
+} from "./maphelpers.js";
 import { supabase } from "./supa.js";
 
 const setDefLocationBtn = document.getElementById("set-def-location");
@@ -14,6 +17,7 @@ const addFishBtn = document.getElementById("add-fish-btn");
 const deleteFishBtn = document.getElementById("delete-btn");
 
 const editBtn = document.getElementsByClassName("edit")[0];
+const infoPopUp = document.getElementById("popup");
 
 const cancelBtn = document.getElementById("cancel");
 
@@ -94,7 +98,7 @@ deleteFishBtn.addEventListener("click", function () {
 });
 
 const popup = new ol.Overlay({
-  element: document.getElementById("popup"),
+  element: infoPopUp,
   autoPan: true,
   positioning: "bottom-center",
 });
@@ -208,7 +212,7 @@ setDefLocationBtn.addEventListener("click", async () => {
   }
 });
 
-editBtn.addEventListener("click", (e) => {
+editBtn.addEventListener("click", () => {
   const featureID = editBtn.dataset.featureid;
   const feature = vectorSource.getFeatureById(featureID);
 
@@ -225,7 +229,33 @@ editBtn.addEventListener("click", (e) => {
   formStructure.value = feature.values_.structure;
   formBottom.value = feature.values_.bottom;
 
-  // handle marker update shit
+  const updateMarker = (e) => {
+    e.preventDefault();
 
-  // saveMarkersToLocalStorage(map, vectorSource);
+    const formdata = new FormData(e.target);
+
+    console.log(formdata.get("name"));
+
+    feature.values_.name = formdata.get("name");
+    feature.values_.depth = formdata.get("depth");
+    feature.values_.structure = formdata.get("structure");
+    feature.values_.bottom = formdata.get("bottom");
+
+    addFishPopup.style.display = "none";
+    popupForm.reset();
+    saveMarkersToLocalStorage(map, vectorSource);
+
+    infoPopUp.style.display = "none";
+  };
+
+  popupForm.addEventListener("submit", updateMarker, { once: true });
+
+  const deleteEventListener = (e) => {
+    e.preventDefault();
+    popupForm.removeEventListener("submit", updateMarker);
+    addFishPopup.style.display = "none";
+    popupForm.reset();
+  };
+
+  cancelBtn.addEventListener("click", deleteEventListener, { once: true });
 });
