@@ -17,6 +17,8 @@ const popupForm = document.getElementById("popup-form");
 const addFishBtn = document.getElementById("add-fish-btn");
 const deleteFishBtn = document.getElementById("delete-btn");
 
+const hideFishSpotBtn = document.getElementById("toggle-spots");
+
 const editBtn = document.getElementsByClassName("edit")[0];
 const infoPopUp = document.getElementById("popup");
 
@@ -24,6 +26,8 @@ const cancelBtn = document.getElementById("cancel");
 
 let addFishMode = false;
 let deleteMode = false;
+
+let hideFishingSpots = false;
 
 // Call the function to check session status
 let user = await checkSession();
@@ -62,6 +66,49 @@ function toggleDeleteFishMode() {
 }
 
 deleteFishBtn.addEventListener("click", toggleDeleteFishMode);
+
+let invisibleStyle = new ol.style.Style({
+  fill: new ol.style.Fill({
+    color: 'rgba(255, 0, 0, 0)', // Red fill with 0 opacity
+  }),
+  stroke: new ol.style.Stroke({
+    color: 'rgba(0, 0, 255, 0)', // Blue outline with 0 opacity
+    width: 2,
+  }),
+});
+
+function toggleFeatureVisibility(feature) {
+  let currentStyle = feature.getStyle();
+  console.log(currentStyle)
+  
+  if (currentStyle === invisibleStyle) {
+    feature.setStyle(null);
+  } else {
+    feature.setStyle(invisibleStyle)
+  }  
+}
+
+function toggleFishingSpotVisibility() {
+  hideFishingSpots = !hideFishingSpots;
+  hideFishSpotBtn.textContent = hideFishingSpots ? "Show Fishing Spots" : "Hide Fishing Spots"
+
+  addFishMode = false;
+  addFishBtn.textContent = "Add Marker"
+
+  deleteMode = false;
+  deleteFishBtn.textContent = "Delete Mode"
+
+  const features = vectorSource.getFeatures()
+
+  features.map((feature) => {
+    if (feature.values_.type === "Fishing Spot") {
+      toggleFeatureVisibility(feature)
+    }
+  })
+} 
+
+
+hideFishSpotBtn.addEventListener("click", toggleFishingSpotVisibility);
 
 const popup = new ol.Overlay({
   element: infoPopUp,
