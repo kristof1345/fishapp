@@ -15,6 +15,7 @@ const addFishPopup = document.getElementById("add-spot-popup");
 const popupForm = document.getElementById("popup-form");
 
 const addFishBtn = document.getElementById("add-fish-btn");
+const addBankSpotBtn = document.getElementById("add-bank-btn");
 const deleteFishBtn = document.getElementById("delete-btn");
 
 const hideFishSpotBtn = document.getElementById("toggle-spots");
@@ -25,6 +26,7 @@ const infoPopUp = document.getElementById("popup");
 const cancelBtn = document.getElementById("cancel");
 
 let addFishMode = false;
+let addBankSpotMode = false;
 let deleteMode = false;
 
 let hideFishingSpots = false;
@@ -51,9 +53,29 @@ function toggleFishMode() {
     deleteMode = !deleteMode;
     deleteFishBtn.textContent = deleteMode ? "Exit Mode" : "Delete Mode";
   }
+  if (addBankSpotMode) {
+    addBankSpotMode = !addBankSpotMode;
+    addBankSpotBtn.textContent = addBankSpotMode ? "Exit Mode" : "Add Bank Marker"
+  }
 }
 
 addFishBtn.addEventListener("click", toggleFishMode);
+
+function toggleAddBankSpotMode() {
+  addBankSpotMode = !addBankSpotMode;
+  addBankSpotBtn.textContent = addBankSpotMode ? "Exit Mode" : "Add Bank Marker"
+
+  if (deleteMode) {
+    deleteMode = !deleteMode;
+    deleteFishBtn.textContent = deleteMode ? "Exit Mode" : "Delete Mode";
+  }
+  if (addFishMode) {
+    addFishMode = !addFishMode;
+    addFishBtn.textContent = addFishMode ? "Exit Mode" : "Add Marker";
+  }
+}
+
+addBankSpotBtn.addEventListener("click", toggleAddBankSpotMode)
 
 function toggleDeleteFishMode() {
   deleteMode = !deleteMode;
@@ -62,6 +84,10 @@ function toggleDeleteFishMode() {
   if (addFishMode) {
     addFishMode = !addFishMode;
     addFishBtn.textContent = addFishMode ? "Exit Mode" : "Add Marker";
+  }
+  if (addBankSpotMode) {
+    addBankSpotMode = !addBankSpotMode;
+    addBankSpotBtn.textContent = addBankSpotMode ? "Exit Mode" : "Add Bank Marker"
   }
 }
 
