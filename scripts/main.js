@@ -45,6 +45,7 @@ document.getElementById("searchbar").addEventListener("submit", function (e) {
   searchMap(map, query);
 });
 
+// this section is absolutely wild here, I have to somehow do something with this here
 function toggleFishMode() {
   addFishMode = !addFishMode;
   addFishBtn.textContent = addFishMode ? "Exit Mode" : "Add Marker";
@@ -144,29 +145,40 @@ const popup = new ol.Overlay({
 
 map.addOverlay(popup);
 
-function handlePopupForm(e, coordinates) {
+function handlePopupForm(e, coordinates, spotType) {
   e.preventDefault();
 
   const formdata = new FormData(e.target);
 
   console.log(formdata.get("name"));
 
-  addMarker(coordinates, formdata);
+  addMarker(coordinates, formdata, spotType);
 
+  // multiple HTMLs, same deal, use if statements to see which one to terminate
   addFishPopup.style.display = "none";
   popupForm.reset();
 }
 
 // Add a click event listener on the map to place markers
 map.on("click", function (event) {
-  if (addFishMode) {
+  if (addFishMode || addBankSpotMode) {
+    // so what I'm thinking here is this, since I want different input elements to be displayed based on the type of spot we are talking about, I will have multiple HTML elements and I will use if statements - like below - to determine which one to show
     addFishPopup.style.display = "flex";
+    let spotType;
 
-    addFishMode = !addFishMode;
-    addFishBtn.textContent = addFishMode ? "Exit Mode" : "Add Marker";
+    if (addFishMode) {
+      addFishMode = !addFishMode;
+      addFishBtn.textContent = addFishMode ? "Exit Mode" : "Add Marker";
+      spotType = "Fishing Spot"
+    }
+    if (addBankSpotMode) {
+      addBankSpotMode = !addBankSpotMode;
+      addBankSpotBtn.textContent = addBankSpotMode ? "Exit Mode" : "Add Bank Marker"
+      spotType = "Bank Spot"
+    }
 
     const popupFormListener = (e) => {
-      handlePopupForm(e, event.coordinate);
+      handlePopupForm(e, event.coordinate, spotType);
     };
 
     popupForm.addEventListener("submit", popupFormListener, { once: true });

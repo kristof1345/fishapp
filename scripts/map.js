@@ -52,10 +52,10 @@ export const vectorLayer = new ol.layer.Vector({
 map.addLayer(vectorLayer);
 
 // Function to add a marker at the clicked location
-export function addMarker(coordinates, formdata) {
+export function addMarker(coordinates, formdata, spotType) {
   const marker = new ol.Feature({
     geometry: new ol.geom.Point(coordinates),
-    type: "Fishing Spot",
+    type: spotType,
     name: formdata.get("name"),
     bottom: formdata.get("bottom") || "???",
     depth: formdata.get("depth") || "???",
