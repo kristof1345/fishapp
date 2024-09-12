@@ -13,6 +13,7 @@ const usernameDOM = document.getElementById("username");
 
 const addFishPopup = document.getElementById("add-spot-popup");
 const popupForm = document.getElementById("popup-form");
+const addBankSpotPopup = document.getElementById("add-bankspot-popup")
 
 const addFishBtn = document.getElementById("add-fish-btn");
 const addBankSpotBtn = document.getElementById("add-bank-btn");
@@ -154,16 +155,25 @@ function handlePopupForm(e, coordinates, spotType) {
 
   addMarker(coordinates, formdata, spotType);
 
-  // multiple HTMLs, same deal, use if statements to see which one to terminate
-  addFishPopup.style.display = "none";
+  if (spotType === "Fishing Spot") {
+    addFishPopup.style.display = "none";
+  }
+  if (spotType === "Bank Spot") {
+    addBankSpotPopup.style.display = "none"  
+  }
   popupForm.reset();
 }
 
-// Add a click event listener on the map to place markers
 map.on("click", function (event) {
   if (addFishMode || addBankSpotMode) {
-    // so what I'm thinking here is this, since I want different input elements to be displayed based on the type of spot we are talking about, I will have multiple HTML elements and I will use if statements - like below - to determine which one to show
-    addFishPopup.style.display = "flex";
+
+    if (addFishMode) {
+      addFishPopup.style.display = "flex";
+    }
+    if (addBankSpotMode) {
+      addBankSpotPopup.style.display = "flex"  
+    }
+
     let spotType;
 
     if (addFishMode) {
@@ -181,12 +191,18 @@ map.on("click", function (event) {
       handlePopupForm(e, event.coordinate, spotType);
     };
 
+    // BIG BOY problem here, I think we will need to add another eventlistener to handle to other type of marker... shit
     popupForm.addEventListener("submit", popupFormListener, { once: true });
 
     const deleteEventListener = (e) => {
       e.preventDefault();
       popupForm.removeEventListener("submit", popupFormListener);
-      addFishPopup.style.display = "none";
+      if (addFishMode) {
+        addFishPopup.style.display = "none";
+      }
+      if (addBankSpotMode) {
+        addBankSpotPopup.style.display = "none"  
+      }
       popupForm.reset();
     };
 

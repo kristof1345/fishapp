@@ -51,16 +51,33 @@ export const vectorLayer = new ol.layer.Vector({
 
 map.addLayer(vectorLayer);
 
+function makeTypedMarker(coordinates, formdata, spotType) {
+  if (spotType === "Fishing Spot") {
+    const marker = new ol.Feature({
+      geometry: new ol.geom.Point(coordinates),
+      type: spotType,
+      name: formdata.get("name"),
+      bottom: formdata.get("bottom") || "???",
+      depth: formdata.get("depth") || "???",
+      structure: formdata.get("structure") || "???",
+    });
+    return marker;
+  } else if (spotType === "Bank Spot") {
+    const marker = new ol.Feature({
+      geometry: new ol.geom.Point(coordinates),
+      type: spotType,
+      name: formdata.get("name"),
+      fishingspots: formdata.get("fishing-spots") || "???",
+      bugs: formdata.get("bugs") || "???",
+      soil: formdata.get("soil") || "???",
+    });
+    return marker;
+  }
+}
+
 // Function to add a marker at the clicked location
 export function addMarker(coordinates, formdata, spotType) {
-  const marker = new ol.Feature({
-    geometry: new ol.geom.Point(coordinates),
-    type: spotType,
-    name: formdata.get("name"),
-    bottom: formdata.get("bottom") || "???",
-    depth: formdata.get("depth") || "???",
-    structure: formdata.get("structure") || "???",
-  });
+  let marker = makeTypedMarker(coordinates, formdata, spotType);
 
   marker.setId(generateUUID());
 
