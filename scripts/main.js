@@ -13,7 +13,8 @@ const usernameDOM = document.getElementById("username");
 
 const addFishPopup = document.getElementById("add-spot-popup");
 const popupForm = document.getElementById("popup-form");
-const addBankSpotPopup = document.getElementById("add-bankspot-popup")
+const addBankSpotPopup = document.getElementById("add-bankspot-popup");
+const bankPopupForm = document.getElementById("bankpopup-form");
 
 const addFishBtn = document.getElementById("add-fish-btn");
 const addBankSpotBtn = document.getElementById("add-bank-btn");
@@ -25,6 +26,7 @@ const editBtn = document.getElementsByClassName("edit")[0];
 const infoPopUp = document.getElementById("popup");
 
 const cancelBtn = document.getElementById("cancel");
+const bankCancelBtn = document.getElementById("bank-cancel");
 
 let addFishMode = false;
 let addBankSpotMode = false;
@@ -57,7 +59,9 @@ function toggleFishMode() {
   }
   if (addBankSpotMode) {
     addBankSpotMode = !addBankSpotMode;
-    addBankSpotBtn.textContent = addBankSpotMode ? "Exit Mode" : "Add Bank Marker"
+    addBankSpotBtn.textContent = addBankSpotMode
+      ? "Exit Mode"
+      : "Add Bank Marker";
   }
 }
 
@@ -65,7 +69,9 @@ addFishBtn.addEventListener("click", toggleFishMode);
 
 function toggleAddBankSpotMode() {
   addBankSpotMode = !addBankSpotMode;
-  addBankSpotBtn.textContent = addBankSpotMode ? "Exit Mode" : "Add Bank Marker"
+  addBankSpotBtn.textContent = addBankSpotMode
+    ? "Exit Mode"
+    : "Add Bank Marker";
 
   if (deleteMode) {
     deleteMode = !deleteMode;
@@ -77,7 +83,7 @@ function toggleAddBankSpotMode() {
   }
 }
 
-addBankSpotBtn.addEventListener("click", toggleAddBankSpotMode)
+addBankSpotBtn.addEventListener("click", toggleAddBankSpotMode);
 
 function toggleDeleteFishMode() {
   deleteMode = !deleteMode;
@@ -89,7 +95,9 @@ function toggleDeleteFishMode() {
   }
   if (addBankSpotMode) {
     addBankSpotMode = !addBankSpotMode;
-    addBankSpotBtn.textContent = addBankSpotMode ? "Exit Mode" : "Add Bank Marker"
+    addBankSpotBtn.textContent = addBankSpotMode
+      ? "Exit Mode"
+      : "Add Bank Marker";
   }
 }
 
@@ -97,44 +105,45 @@ deleteFishBtn.addEventListener("click", toggleDeleteFishMode);
 
 let invisibleStyle = new ol.style.Style({
   fill: new ol.style.Fill({
-    color: 'rgba(255, 0, 0, 0)', // Red fill with 0 opacity
+    color: "rgba(255, 0, 0, 0)", // Red fill with 0 opacity
   }),
   stroke: new ol.style.Stroke({
-    color: 'rgba(0, 0, 255, 0)', // Blue outline with 0 opacity
+    color: "rgba(0, 0, 255, 0)", // Blue outline with 0 opacity
     width: 2,
   }),
 });
 
 function toggleFeatureVisibility(feature) {
   let currentStyle = feature.getStyle();
-  console.log(currentStyle)
-  
+  console.log(currentStyle);
+
   if (currentStyle === invisibleStyle) {
     feature.setStyle(null);
   } else {
-    feature.setStyle(invisibleStyle)
-  }  
+    feature.setStyle(invisibleStyle);
+  }
 }
 
 function toggleFishingSpotVisibility() {
   hideFishingSpots = !hideFishingSpots;
-  hideFishSpotBtn.textContent = hideFishingSpots ? "Show Fishing Spots" : "Hide Fishing Spots"
+  hideFishSpotBtn.textContent = hideFishingSpots
+    ? "Show Fishing Spots"
+    : "Hide Fishing Spots";
 
   addFishMode = false;
-  addFishBtn.textContent = "Add Marker"
+  addFishBtn.textContent = "Add Marker";
 
   deleteMode = false;
-  deleteFishBtn.textContent = "Delete Mode"
+  deleteFishBtn.textContent = "Delete Mode";
 
-  const features = vectorSource.getFeatures()
+  const features = vectorSource.getFeatures();
 
   features.map((feature) => {
     if (feature.values_.type === "Fishing Spot") {
-      toggleFeatureVisibility(feature)
+      toggleFeatureVisibility(feature);
     }
-  })
-} 
-
+  });
+}
 
 hideFishSpotBtn.addEventListener("click", toggleFishingSpotVisibility);
 
@@ -157,21 +166,21 @@ function handlePopupForm(e, coordinates, spotType) {
 
   if (spotType === "Fishing Spot") {
     addFishPopup.style.display = "none";
+    popupForm.reset();
   }
   if (spotType === "Bank Spot") {
-    addBankSpotPopup.style.display = "none"  
+    addBankSpotPopup.style.display = "none";
+    bankPopupForm.reset();
   }
-  popupForm.reset();
 }
 
 map.on("click", function (event) {
   if (addFishMode || addBankSpotMode) {
-
     if (addFishMode) {
       addFishPopup.style.display = "flex";
     }
     if (addBankSpotMode) {
-      addBankSpotPopup.style.display = "flex"  
+      addBankSpotPopup.style.display = "flex";
     }
 
     let spotType;
@@ -179,12 +188,14 @@ map.on("click", function (event) {
     if (addFishMode) {
       addFishMode = !addFishMode;
       addFishBtn.textContent = addFishMode ? "Exit Mode" : "Add Marker";
-      spotType = "Fishing Spot"
+      spotType = "Fishing Spot";
     }
     if (addBankSpotMode) {
       addBankSpotMode = !addBankSpotMode;
-      addBankSpotBtn.textContent = addBankSpotMode ? "Exit Mode" : "Add Bank Marker"
-      spotType = "Bank Spot"
+      addBankSpotBtn.textContent = addBankSpotMode
+        ? "Exit Mode"
+        : "Add Bank Marker";
+      spotType = "Bank Spot";
     }
 
     const popupFormListener = (e) => {
@@ -192,21 +203,27 @@ map.on("click", function (event) {
     };
 
     // BIG BOY problem here, I think we will need to add another eventlistener to handle to other type of marker... shit
+    bankPopupForm.addEventListener("submit", popupFormListener, { once: true });
     popupForm.addEventListener("submit", popupFormListener, { once: true });
 
     const deleteEventListener = (e) => {
       e.preventDefault();
-      popupForm.removeEventListener("submit", popupFormListener);
       if (addFishMode) {
         addFishPopup.style.display = "none";
+        popupForm.removeEventListener("submit", popupFormListener);
+        popupForm.reset();
       }
       if (addBankSpotMode) {
-        addBankSpotPopup.style.display = "none"  
+        addBankSpotPopup.style.display = "none";
+        bankPopupForm.removeEventListener("submit", popupFormListener);
+        bankPopupForm.reset();
       }
-      popupForm.reset();
     };
 
     cancelBtn.addEventListener("click", deleteEventListener, { once: true });
+    bankCancelBtn.addEventListener("click", deleteEventListener, {
+      once: true,
+    });
   }
 
   if (deleteMode) {
@@ -214,6 +231,11 @@ map.on("click", function (event) {
       return feature;
     });
     if (feature && feature.get("type") === "Fishing Spot") {
+      // sketch lol
+      vectorSource.removeFeature(feature);
+      saveMarkersToLocalStorage(map, vectorSource);
+    }
+    if (feature && feature.get("type") === "Bank Spot") {
       // sketch lol
       vectorSource.removeFeature(feature);
       saveMarkersToLocalStorage(map, vectorSource);
