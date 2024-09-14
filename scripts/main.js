@@ -176,7 +176,6 @@ function handlePopupForm(e, event, spotType) {
 }
 
 map.on("click", function (event) {
-  console.log(event.coordinate);
   if (addFishMode) {
     addFishPopup.style.display = "flex";
 
@@ -248,9 +247,12 @@ map.on("click", function (event) {
     return;
   }
 
-  if (!addFishMode) {
+  if (!addFishMode && !addBankSpotMode) {
     map.forEachFeatureAtPixel(event.pixel, function (feature) {
-      if (feature && feature.get("type") === "Fishing Spot") {
+      if (
+        (feature && feature.get("type") === "Fishing Spot") ||
+        feature.get("type") === "Bank Spot"
+      ) {
         addPopupOnClick(feature, popup, popupContent, editBtn);
       }
     });

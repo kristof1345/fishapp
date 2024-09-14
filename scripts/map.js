@@ -91,15 +91,21 @@ loadMarkersFromLocalStorage(map, vectorSource);
 export function addPopupOnClick(feature, popup, popupContent, editBtn) {
   const coordinates = feature.getGeometry().getCoordinates();
   const name = feature.get("name");
-  const depth = feature.get("depth");
-  const structure = feature.get("structure");
-  const bottom = feature.get("bottom");
-  popupContent.innerHTML = `<div>
+  if (feature.get("type") === "Fishing Spot") {
+    popupContent.innerHTML = `<div>
                               <h2>${name}</h2>
-                              <p>Depth: ${depth}m</p>
-                              <p>Structure: ${structure}</p>
-                              <p>Bottom: ${bottom}.</p>
+                              <p>Depth: ${feature.get("depth")}m</p>
+                              <p>Structure: ${feature.get("structure")}</p>
+                              <p>Bottom: ${feature.get("bottom")}.</p>
                             </div>`;
+  } else if (feature.get("type") === "Bank Spot") {
+    popupContent.innerHTML = `<div>
+                              <h2>${name}</h2>
+                              <p>Reachable Fishing Spots: ${feature.get("fishingspots")}</p>
+                              <p>Bugs: ${feature.get("bugs")}</p>
+                              <p>Soil: ${feature.get("soil")}.</p>
+                            </div>`;
+  }
   editBtn.dataset.featureid = feature.getId("id");
   popup.setPosition(coordinates);
   popup.getElement().style.display = "block";
