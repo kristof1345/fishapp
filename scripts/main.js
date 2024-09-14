@@ -161,70 +161,71 @@ function handlePopupForm(e, event, spotType) {
   const formdata = new FormData(e.target);
 
   console.log(formdata.get("name"));
-  console.log(event.coordinates);
+  console.log(event.coordinate);
 
-  addMarker(event.coordinates, formdata, spotType);
+  addMarker(event.coordinate, formdata, spotType);
 
   if (spotType === "Fishing Spot") {
-    addFishPopup.style.display = "none";
     popupForm.reset();
+    addFishPopup.style.display = "none";
   }
   if (spotType === "Bank Spot") {
-    addBankSpotPopup.style.display = "none";
     bankPopupForm.reset();
+    addBankSpotPopup.style.display = "none";
   }
 }
 
 map.on("click", function (event) {
-  if (addFishMode || addBankSpotMode) {
-    if (addFishMode) {
-      addFishPopup.style.display = "flex";
-    }
-    if (addBankSpotMode) {
-      addBankSpotPopup.style.display = "flex";
-    }
+  console.log(event.coordinate);
+  if (addFishMode) {
+    addFishPopup.style.display = "flex";
 
     let spotType;
 
-    if (addFishMode) {
-      addFishMode = !addFishMode;
-      addFishBtn.textContent = addFishMode ? "Exit Mode" : "Add Marker";
-      spotType = "Fishing Spot";
-    }
-    if (addBankSpotMode) {
-      addBankSpotMode = !addBankSpotMode;
-      addBankSpotBtn.textContent = addBankSpotMode
-        ? "Exit Mode"
-        : "Add Bank Marker";
-      spotType = "Bank Spot";
-    }
+    addFishMode = !addFishMode;
+    addFishBtn.textContent = addFishMode ? "Exit Mode" : "Add Marker";
+    spotType = "Fishing Spot";
 
     const popupFormListener = (e) => {
       handlePopupForm(e, event, spotType);
     };
 
-    // BIG BOY problem here, I think we will need to add another eventlistener to handle to other type of marker... shit
-    bankPopupForm.addEventListener("submit", popupFormListener, { once: true });
     popupForm.addEventListener("submit", popupFormListener, { once: true });
 
     const deleteEventListener = (e) => {
       e.preventDefault();
-      console.log("something fired");
-      if (spotType === "Fishing Spot") {
-        console.log("add fish fired");
-        addFishPopup.style.display = "none";
-        popupForm.removeEventListener("submit", popupFormListener);
-        popupForm.reset();
-      }
-      if (spotType === "Bank Spot") {
-        console.log("add bank spot fired");
-        addBankSpotPopup.style.display = "none";
-        bankPopupForm.removeEventListener("submit", popupFormListener);
-        bankPopupForm.reset();
-      }
+      popupForm.removeEventListener("submit", popupFormListener);
+      popupForm.reset();
+      addFishPopup.style.display = "none";
     };
 
     cancelBtn.addEventListener("click", deleteEventListener, { once: true });
+  }
+
+  if (addBankSpotMode) {
+    addBankSpotPopup.style.display = "flex";
+
+    let spotType;
+
+    addBankSpotMode = !addBankSpotMode;
+    addBankSpotBtn.textContent = addBankSpotMode
+      ? "Exit Mode"
+      : "Add Bank Marker";
+    spotType = "Bank Spot";
+
+    const popupFormListener = (e) => {
+      handlePopupForm(e, event, spotType);
+    };
+
+    bankPopupForm.addEventListener("submit", popupFormListener, { once: true });
+
+    const deleteEventListener = (e) => {
+      e.preventDefault();
+      bankPopupForm.removeEventListener("submit", popupFormListener);
+      bankPopupForm.reset();
+      addBankSpotPopup.style.display = "none";
+    };
+
     bankCancelBtn.addEventListener("click", deleteEventListener, {
       once: true,
     });
