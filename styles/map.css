@@ -256,6 +256,7 @@ body {
   display: none;
 }
 
+#bankpopup-form,
 #popup-form {
   background-color: white;
   position: relative;
@@ -263,6 +264,7 @@ body {
   border-radius: 10px;
 }
 
+#bankpopup-form > button,
 #popup-form > button {
   border: solid 2px black;
   padding: 5px 10px;
@@ -272,6 +274,7 @@ body {
   margin-top: 15px;
 }
 
+#bankpopup-form > button:hover,
 #popup-form > button:hover {
   border: solid 2px transparent;
 }
@@ -279,7 +282,10 @@ body {
 #name,
 #depth,
 #structure,
-#bottom {
+#bottom,
+#fishing-spots,
+#bugs,
+#soil {
   border-radius: 5px;
   width: 100%;
   margin-bottom: 5px;

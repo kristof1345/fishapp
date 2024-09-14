@@ -155,14 +155,15 @@ const popup = new ol.Overlay({
 
 map.addOverlay(popup);
 
-function handlePopupForm(e, coordinates, spotType) {
+function handlePopupForm(e, event, spotType) {
   e.preventDefault();
 
   const formdata = new FormData(e.target);
 
   console.log(formdata.get("name"));
+  console.log(event.coordinates);
 
-  addMarker(coordinates, formdata, spotType);
+  addMarker(event.coordinates, formdata, spotType);
 
   if (spotType === "Fishing Spot") {
     addFishPopup.style.display = "none";
@@ -199,7 +200,7 @@ map.on("click", function (event) {
     }
 
     const popupFormListener = (e) => {
-      handlePopupForm(e, event.coordinate, spotType);
+      handlePopupForm(e, event, spotType);
     };
 
     // BIG BOY problem here, I think we will need to add another eventlistener to handle to other type of marker... shit
@@ -208,12 +209,15 @@ map.on("click", function (event) {
 
     const deleteEventListener = (e) => {
       e.preventDefault();
-      if (addFishMode) {
+      console.log("something fired");
+      if (spotType === "Fishing Spot") {
+        console.log("add fish fired");
         addFishPopup.style.display = "none";
         popupForm.removeEventListener("submit", popupFormListener);
         popupForm.reset();
       }
-      if (addBankSpotMode) {
+      if (spotType === "Bank Spot") {
+        console.log("add bank spot fired");
         addBankSpotPopup.style.display = "none";
         bankPopupForm.removeEventListener("submit", popupFormListener);
         bankPopupForm.reset();
